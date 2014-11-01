@@ -40,7 +40,7 @@ public class Scholarship
 
 	public boolean isFull()
 	{
-		return (counter == totalNumOfAwardees);)
+		return (counter == totalNumOfAwardees);
 	}
 
 	public Boolean onTime()
