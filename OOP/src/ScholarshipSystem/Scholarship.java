@@ -55,7 +55,7 @@ public class Scholarship
 
 	public boolean isEligible(Student stu)
 	{
-		return (onTime() && !isFull() && stu.crit==scholarship_criteria); //overloaded = operator for criteria
+		return (onTime() && !isFull() && stu.student_criteria==scholarship_criteria); //overloaded = operator for criteria
 	}
 
 	public boolean newApplicant()

@@ -12,24 +12,24 @@ import java.util.*;
 
 public class Admin {
 
-	private int adminID;
+	private String adminID;
 	private String password;
 
 	public Admin()
 	{
-		adminID = -1;
+		adminID = "";
 		password = "";
 	}
-	public Admin(int id, String pw)
+	public Admin(String id, String pw)
 	{
 		adminID = id;
 		password = pw;
 	}
 
-	public void setAdminID(int id) { adminID = id; }
+	public void setAdminID(String id) { adminID = id; }
 	public void setPassword(String pw) { password = pw; } // how does security work we just don't know
 
-	public int getAdminID() { return adminID; }
+	public String getAdminID() { return adminID; }
 	public String getPassword() { return password; } // ditto
 
 	public void addScholarship()
@@ -37,6 +37,9 @@ public class Admin {
 		// I/O for now
 
 		Scanner stdin = new Scanner(System.in);
+
+        System.out.println("Welcome!\n" +
+                "Enter new scholarship details.");
 
 		System.out.println("Scholarship name: ");
 		String name = stdin.nextLine();

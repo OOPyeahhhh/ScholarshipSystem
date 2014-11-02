@@ -11,21 +11,21 @@ TODO: Overload equals ?
 
 public class Student {
 
-	private int studentID;
+	private String studentID;
 	private String password;
-	private Criteria studentCrit;
+	protected Criteria student_criteria;
 
 	public Student()
 	{
-		studentID = -1;
+		studentID = "";
 		password = "";
-		studentCrit = null;
+		student_criteria = null;
 	}
-	public Student(int id, String pw, String major, int hours, double gpa)
+	public Student(String id, String pw, String major, int hours, double gpa)
 	{
 		studentID = id;
 		password = pw;
-		//studentCrit = new Criteria(major, hours, gpa); // need Criteria constructor
+		//student_criteria = new Criteria(major, hours, gpa); // need Criteria constructor
 	}
 
 }
