@@ -4,6 +4,11 @@ import java.text.*;
 /**
  * Created by alice on 10/22/14.
  */
+
+/*
+TODO: Overload toString (need it in Admin to confirm addition of scholarship)
+ */
+
 public class Scholarship 
 {
 	private int awardAmount;
@@ -23,18 +28,19 @@ public class Scholarship
 		counter = 0;
 	}
 
-	public Scholarship(int amount, String name, String d, int limit)
+	public Scholarship(int amount, String name, String d, int limit, String major, int hours, double gpa)
 	{
 		scholarshipName = name;
 		awardAmount = amount;
 		deadline = d;
 		totalNumOfAwardees = limit;
+        //scholarship_criteria = new Criteria(major, hours, gpa); // need Criteria constructor
 		counter = 0;
 	}
 
 	public boolean isFull()
 	{
-		return (counter == totalNumOfAwardees;)
+		return (counter == totalNumOfAwardees);
 	}
 
 	public Boolean onTime()
@@ -43,26 +49,13 @@ public class Scholarship
 		Date date = new Date();
 		Date todayDate = dateFormat.format(date);
 		Date deadlineDate = dateFormat.format(deadline);
-		
-		if(todayDate.before(deadline))
-		{
-			return true;
-		}
 
-		 else
-		 {
-		 	return false;
-		 }
+		return todayDate.before(deadline);
 	}
 
 	public boolean isEligible(Student stu)
 	{
-		if (onTime() && !isFull() && stu.crit==scholarship_criteria) //overloaded = operator for criteria
-		{
-			return true;
-		}
-		else
-			return false;
+		return (onTime() && !isFull() && stu.student_criteria==scholarship_criteria); //overloaded = operator for criteria
 	}
 
 	public boolean newApplicant()
@@ -83,7 +76,7 @@ public class Scholarship
 
 	public void setTotalNumOfAwardees(int num)
 	{
-		totalNumOfAwardess = num;
+		totalNumOfAwardees = num;
 	}
 
 	public void setScholarshipName(String s)
