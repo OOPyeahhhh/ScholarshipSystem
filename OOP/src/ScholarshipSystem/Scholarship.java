@@ -1,6 +1,6 @@
 package ScholarshipSystem;
-import java.util.*;
-import java.text.*;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 /**
  * Created by alice on 10/22/14.
  */
@@ -13,7 +13,7 @@ public class Scholarship
 {
 	private int awardAmount;
 	private int totalNumOfAwardees;
-	private	String deadline; //in MM/dd/yyyy
+	private	Date deadline; //Year, Month, Day <- year is 1900 + what ever amount after for the year
 	private String scholarshipName;
 	private Criteria scholarship_criteria;
 	private int counter;
@@ -24,15 +24,15 @@ public class Scholarship
 		awardAmount = 0;
 		scholarshipName = "";
 		totalNumOfAwardees  = 0;
-		deadline = "01/01/2000";
+		deadline = new Date(100, 00, 01); //January 1, 2000 <- Default for the deadline
 		counter = 0;
 	}
 
-	public Scholarship(int amount, String name, String d, int limit, String major, int hours, double gpa)
+	public Scholarship(int amount, String name, int year, int month, int day, int limit, String major, int hours, double gpa)
 	{
 		scholarshipName = name;
 		awardAmount = amount;
-		deadline = d;
+		deadline = new Date(year, month, day);
 		totalNumOfAwardees = limit;
         //scholarship_criteria = new Criteria(major, hours, gpa); // need Criteria constructor
 		counter = 0;
@@ -45,11 +45,7 @@ public class Scholarship
 
 	public Boolean onTime()
 	{
-		DateFormat dateFormat = new SimpleDate("MM/dd/yyyy"); //in MM/dd/yyyy
-		Date date = new Date();
-		Date todayDate = dateFormat.format(date);
-		Date deadlineDate = dateFormat.format(deadline);
-
+		Date todayDate = new Date(); //Current Date
 		return todayDate.before(deadline);
 	}
 
