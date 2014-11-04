@@ -34,7 +34,7 @@ public class Scholarship
 		awardAmount = amount;
 		deadline = new Date(year, month, day);
 		totalNumOfAwardees = limit;
-        //scholarship_criteria = new Criteria(major, hours, gpa); // need Criteria constructor
+        scholarship_criteria = new Criteria(major, hours, gpa);
 		counter = 0;
 	}
 
