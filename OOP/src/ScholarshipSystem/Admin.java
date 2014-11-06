@@ -47,8 +47,15 @@ public class Admin {
 		System.out.println("Award amount: ");
 		int amount = stdin.nextInt();
 
-        System.out.println("Application deadline: ");
-        String deadline = stdin.nextLine();
+        // just as filler to edit Scholarship constructor call
+        System.out.println("Application deadline year: ");
+        int dly = stdin.nextInt();
+
+        System.out.println("Application deadline month: ");
+        int dlm = stdin.nextInt();
+
+        System.out.println("Application deadline day: ");
+        int dld = stdin.nextInt();
 
 		System.out.println("Maximum number of awardees: ");
 		int studentLimit = stdin.nextInt();
@@ -62,7 +69,7 @@ public class Admin {
         System.out.println("Minimum required GPA: ");
         double gpa = stdin.nextDouble();
 
-        Scholarship new_scholarship = new Scholarship(amount, name, deadline, studentLimit, major, hours, gpa);
+        Scholarship new_scholarship = new Scholarship(amount, name, dly, dlm, dld, studentLimit, major, hours, gpa);
 
         System.out.println("Scholarship successfully created!");
         // print toString of new scholarship

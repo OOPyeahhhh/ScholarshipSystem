@@ -37,7 +37,7 @@ public class Scholarship
         dead.set(year,month,day);
         deadline = dead.getTime();
         totalNumOfAwardees = limit;
-        //scholarship_criteria = new Criteria(major, hours, gpa); // need Criteria constructor
+        scholarship_criteria = new Criteria(major, hours, gpa);
         counter = 0;
     }
 

@@ -25,7 +25,7 @@ public class Student {
 	{
 		studentID = id;
 		password = pw;
-		//student_criteria = new Criteria(major, hours, gpa); // need Criteria constructor
+		student_criteria = new Criteria(major, hours, gpa);
 	}
 
 }
