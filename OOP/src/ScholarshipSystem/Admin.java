@@ -8,6 +8,7 @@ import java.util.*;
 
 /*
  TODO: Potentially update call to Scholarship constructor when deadline stuff is figured out
+ TODO: Change I/O to GUI
  */
 
 public class Admin {
