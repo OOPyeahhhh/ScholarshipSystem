@@ -1,4 +1,6 @@
-/.idea
-/OOP/.idea
+*.idea
 *.iml
 *.save*
+/OOP sandbox/test.txt
+/OOP sandbox/out
+/OOP sandbox/src/OOPbox/test.java
