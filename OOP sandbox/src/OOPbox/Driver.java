@@ -20,45 +20,52 @@ public class Driver {
             response = stdin.nextLine();
         }
 
-        if(response.toLowerCase().equals("student"))
-        {
+        if(response.toLowerCase().equals("student")) {
             System.out.println("Enter Student ID: ");
-            String student_id = stdin.nextLine();
+            int student_id = stdin.nextInt();
+            stdin.nextLine(); // read in \n
+            Student applicant = new Student(student_id);
 
-            // authentication!
+
+            if (!applicant.isInSystem())
+                System.out.println("Sorry, you are not registered as a student.");
+            else {
+                // authentication!
 //            if(Student.authenticate(student_id)) {
-                System.out.println("What is your major? ");
-                // with gui we can use a dropdown for this; as it is when we make up some test scholarships we'll end up
-                // with a list of corresponding majors and we can display that
-                String major = stdin.nextLine();
-                System.out.println("How many credit hours have you completed prior to the current semester? ");
-                int hours = stdin.nextInt();
-                System.out.println("What is your GPA? (Out of 4.0) ");
-                double gpa = stdin.nextDouble();
-
-                Student applicant = new Student(student_id, major, hours, gpa);
-                System.out.println("Searching for scholarships...");
-                try
+                if (applicant.isScholarshipRecipient()) // if student is already receiving a scholarship, do nothing
                 {
+                    System.out.println("Sorry, you are already receiving a scholarship."); // TODO: which one?
+                }
+                else {
+                    System.out.println("What is your major? "); // TODO: Provide list of valid majors?
+                    String major = stdin.nextLine();
+                    System.out.println("How many credit hours have you completed prior to the current semester? ");
+                    int hours = stdin.nextInt();
+                    System.out.println("What is your GPA? (Out of 4.0) ");
+                    double gpa = stdin.nextDouble();
+
+                    applicant.setCriteria(major, hours, gpa);
+
+                    System.out.println("Searching for scholarships...");
+                    try {
                     /*
                     Call method eligibleForScholarships() of Student class.
                     Method checks each scholarship file for student eligibility.
-                    Matches are printed as they are found and associated with a number.
+                    Matches are printed as they are found.
                         If no matches are found, method will print "There are no scholarship matches."
                     Method asks student to indicate their desired scholarship, opens associated recipients file, and appends the student's ID.
                      */
-                    applicant.eligibleForScholarships();
-                }
-                catch(FileNotFoundException e)
-                {
-                    System.out.println("There are no scholarships available at this time.");
-                }
-
-//            }
+                        applicant.eligibleForScholarships();
+                    } catch (FileNotFoundException e) {
+                        System.out.println("There are no scholarships available at this time.");
+                    }
+                    //           }
 //            else // Student not authenticated
 //            {
 //                // TODO: message dialogue and exit
 //            }
+                }
+            }
         }
         else // Admin
         {
@@ -88,7 +95,7 @@ public class Driver {
             }
             else if(response2.toLowerCase().equals("s"))
             {
-                // print student scholarship
+                admin.seeScholarshipAwarded();
             }
 
 
@@ -99,5 +106,6 @@ public class Driver {
 //            }
         }
 
+        // TODO: maybe, you know, keep this open and ask if they want to do something else (just a thought)
     }
 }
