@@ -105,7 +105,7 @@ public class Admin {
             }
 
             int scholarshipID = stdin.nextInt();
-            String fileName = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Recipients/recipients" + scholarshipID + ".txt";
+            String fileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Recipients/recipients" + scholarshipID + ".txt";
 
             try {
                 Scanner recipientsFile = new Scanner(new File(fileName));
@@ -125,6 +125,62 @@ public class Admin {
 //        {
 //            String scholarshipName = stdin.nextLine();
 //        }
+
+    }
+    public void seeScholarshipAwarded()
+    {
+        Scanner stdin = new Scanner(System.in);
+        System.out.println("Enter student ID.");
+        while(!stdin.hasNextInt())
+            System.out.println("Please enter a valid student ID."); // TODO: set specific restrictions on ID #s
+
+        int response = stdin.nextInt();
+        String studentFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student" + response + ".txt";
+        try {
+            Scanner studentFile = new Scanner(new File(studentFileName));
+//            studentFile.nextInt(); // Read in student ID on 1st line
+            int status = studentFile.nextInt();
+            boolean isRecipient = (status != 0);
+            if(!isRecipient)
+            {
+                System.out.println("Student ID " + response + " is not receiving a scholarship.");
+            }
+            else
+            {
+                String line = "";
+                while(studentFile.hasNextLine())
+                {
+                    line = studentFile.nextLine();
+                }
+
+                try {
+                    int scholarshipID = Integer.parseInt(line);
+
+                    String schFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Scholarships/scholarship" + scholarshipID + ".txt";
+                    try {
+                        Scanner schFile = new Scanner(new File(schFileName));
+                        schFile.nextInt(); // Read scholarship ID# on first line
+                        schFile.nextLine(); // Read \n after integer
+                        String name = schFile.nextLine();
+                        System.out.println("Student ID " + response + " is receiving " + name + " (ID#: " + scholarshipID + ")");
+                    }
+                    catch(FileNotFoundException e)
+                    {
+                        System.out.println("Error in student information.");
+                    }
+                }
+                catch(NumberFormatException e)
+                {
+                    System.out.println("Error in student information.");
+                }
+
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Student ID " + response + " is not in the system.");
+        }
+
+
 
     }
 

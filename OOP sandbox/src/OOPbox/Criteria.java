@@ -9,6 +9,9 @@ public class Criteria {
     private int hours;
     private double gpa;
 
+    public Criteria() {
+    }
+
     public Criteria(String m, int h, double g) {
         setMajor(m);
         setHours(h);
