@@ -96,35 +96,7 @@ public class Scholarship
         {
             System.out.println("Error creating recipients file.");
         }
-
-
     }
-
-/*    public boolean isFull()
-    {
-        return (counter == totalNumOfAwardees);
-    }
-
-    public Boolean isPastDeadline()
-    {
-        Date todayDate = new Date(); //Current Date
-        return todayDate.after(deadline);
-    }
-
-    public boolean isEligible(Student stu)
-    {
-        return (!isPastDeadline() && !isFull() && stu.student_criteria==scholarship_criteria); //overloaded == operator for criteria
-    }
-
-    public boolean newApplicant()
-    {
-
-    }
-
-    public void display()
-    {
-        //database
-    }*/
 
     public void setAwardAmount(int num)
     {
