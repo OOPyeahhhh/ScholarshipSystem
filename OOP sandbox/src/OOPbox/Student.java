@@ -12,7 +12,6 @@ import java.io.File;
 
 /*
 TODO: Overload toString()
-TODO: Overload equals ?
  */
 
 public class Student {
@@ -51,8 +50,7 @@ public class Student {
             String fileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student" + studentID + ".txt";
             try {
                 Scanner file = new Scanner(new File(fileName));
-                file.nextInt();
-                int status = file.nextInt();
+                int status = file.nextInt(); // Read in isScholarshipRecipient flag
                 isScholarshipRecipient = (status!=0);
                 file.close();
 
@@ -61,29 +59,33 @@ public class Student {
             }
         }
     }
-    public void setCriteria(String major, int hours, double gpa) {
-        student_criteria.setMajor(major);
-        student_criteria.setHours(hours);
-        student_criteria.setGpa(gpa);
-        // TODO: append to student file
-        String studentFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student"+studentID+".txt";
-        try
-        {
-            FileWriter studentFile = new FileWriter(new File(studentFileName), true);
-            studentFile.write(student_criteria.getMajor());
-            studentFile.write("\n");
-            studentFile.write(student_criteria.getHours());
-            studentFile.write("\n");
-            studentFile.write(String.valueOf(student_criteria.getGpa()));
-            studentFile.write("\n");
 
-            studentFile.close();
-        }
-        catch(IOException e)
-        {
-            System.out.println("An error occurred while updating student data.");
-        }
-    }
+    /**
+     * This is needed only if we want to store the criteria once a student has logged in once.
+     * Eligibility is checked with the Criteria instance created when the program runs, so students can just input their data every time. Less hassle.
+     */
+//    public void setCriteria(String major, int hours, double gpa) {
+//        student_criteria.setMajor(major);
+//        student_criteria.setHours(hours);
+//        student_criteria.setGpa(gpa);
+//        String studentFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student"+studentID+".txt";
+//        try
+//        {
+//            FileWriter studentFile = new FileWriter(new File(studentFileName), true);
+//            studentFile.write(student_criteria.getMajor());
+//            studentFile.write("\n");
+//            studentFile.write(String.valueOf(student_criteria.getHours()));
+//            studentFile.write("\n");
+//            studentFile.write(String.valueOf(student_criteria.getGpa()));
+//            studentFile.write("\n");
+//
+//            studentFile.close();
+//        }
+//        catch(IOException e)
+//        {
+//            System.out.println("An error occurred while updating student data.");
+//        }
+//    }
 
     public boolean isInSystem()
     {
@@ -95,22 +97,28 @@ public class Student {
      * Only called if !isScholarshipRecipient.
      * @throws FileNotFoundException
      */
-    public void eligibleForScholarships() throws FileNotFoundException {
+    public void eligibleForScholarships() throws FileNotFoundException
+    {
         if (isScholarshipRecipient) {
             System.out.println("Error, applicant is already receiving a scholarship.");
 
         } else {
-            String myDirectoryPath = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Scholarships";
+            String myDirectoryPath = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Scholarships";
+
             File dir = new File(myDirectoryPath);
             File[] directoryListing = dir.listFiles();
             if (directoryListing != null) {
                 Integer[] schIDs = new Integer[directoryListing.length+1];
                 int i=0;
                 boolean atLeastOne = false;
+                Scanner scholarshipFile = null; // Initialize scholarshipFile
                 // TODO: deal with .DS_Store permanently
                 for (File child : directoryListing) // Search for and print matching scholarships if any
                 {
-                    Scanner scholarshipFile = new Scanner(child); // Throws FileNotFoundException if there are no files in the directory (I think). Means there are no scholarships. Driver prints message.
+                    if(scholarshipFile!=null)
+                        scholarshipFile.close();
+
+                     scholarshipFile = new Scanner(child); // Throws FileNotFoundException if there are no files in the directory (I think). Means there are no scholarships. Driver prints message.
 
                     // Get ID number of scholarship
                     int scholarshipID = scholarshipFile.nextInt();
@@ -135,7 +143,7 @@ public class Student {
                         scholarshipFile.nextLine(); // read \n
 
                         // Get number of current recipients
-                        String rFileName = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Recipients/recipients" + scholarshipID + ".txt";
+                        String rFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Recipients/recipients" + scholarshipID + ".txt";
 
                         Scanner temp = new Scanner(new File(rFileName));
                         int numberOfLines = 0;
@@ -149,19 +157,6 @@ public class Student {
                         // See if recipient limit reached
                         if (numberOfRecipients < awardeeLimit) // Scholarship can still be awarded
                         {
-//                            // Check if student has previously been awarded the scholarship
-//                            boolean newApplicant = true;
-//                            Scanner temp2 = new Scanner(new File(rFileName));
-//                            while (temp2.hasNextLine() && newApplicant) {
-//                                String recipient = temp2.nextLine();
-//                                if (String.valueOf(studentID).equals(recipient))
-//                                    newApplicant = false;
-//                            }
-//                            temp2.close();
-//
-//                            if (newApplicant) // If student is new applicant
-//                            {
-
                                 // Check criteria
                                 String major = scholarshipFile.nextLine();
                                 int hours = scholarshipFile.nextInt();
@@ -187,30 +182,21 @@ public class Student {
                                     i++;
                                 } else // Student is not eligible
                                 {
-                                    break;
+                                    continue; // Skip to next iteration (next scholarship file)
                                 }
-                           //} //else // Student is already recipient of the scholarship
-//                            {
-//                                break;
-//                            }
                         } else // Scholarship full
                         {
-                            break;
+                            continue;
                         }
                     } else // Today is after deadline
                     {
-                        break;
+                        continue;
                     }
 
-                    // Read \n at end of file
-                    scholarshipFile.nextLine();
-
                     scholarshipFile.close();
-
-                    // Indicate end of eligible scholarship IDs
-                    schIDs[i] = -1;
-
                 }
+                // Indicate end of eligible scholarship IDs
+                schIDs[i] = -1;
 
                 if (!atLeastOne) // Student is not eligible for any scholarships
                 {
@@ -219,17 +205,17 @@ public class Student {
                 {
                     Scanner stdin = new Scanner(System.in);
                     System.out.println("Please choose a scholarship by entering its ID number.");
-                    int response = stdin.nextInt(); // TODO: validate this input
-                    do {
+                    int response = stdin.nextInt();
+                    while (!Arrays.asList(schIDs).contains(response)) {
                         System.out.println("Please enter the ID number of a scholarship from the provided list.");
                         response = stdin.nextInt();
-                    } while(!Arrays.asList(schIDs).contains(response));
+                    }
 
-                    String recipientsFileName = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Recipients/recipients" + response + ".txt";
+                    String recipientsFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Recipients/recipients" + response + ".txt";
                     try {
                         FileWriter recipientsFile = new FileWriter(new File(recipientsFileName), true);
-                        recipientsFile.write(studentID);
-                        recipientsFile.write("\n");
+                        recipientsFile.write(String.valueOf(studentID));
+//                        recipientsFile.write("\n");
                         recipientsFile.close();
                         System.out.println("You have been awarded the scholarship.");
 
@@ -238,15 +224,23 @@ public class Student {
                     }
 
                     String studentFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student" + studentID + ".txt";
+                    FileWriter studentFile = null;
                     try{
-                        // TODO: rewrite file with isRecipient flag set to 1
-                        FileWriter studentFile = new FileWriter(new File(studentFileName), true);
-                        studentFile.write(response); // Write the ID of the chosen scholarship.
-                        studentFile.close();
+                        studentFile = new FileWriter(new File(studentFileName), false); // File will be overwritten rather than appended to
+                        studentFile.write("1"); // Write 1 to indicate that student is scholarship recipient
+                        studentFile.write("\n");
+                        studentFile.write(String.valueOf(response)); // Write the ID of the chosen scholarship
                     }
                     catch(IOException e)
                     {
                         System.out.println("An error occurred while accessing student file.");
+                    }
+                    finally
+                    {
+                        if(studentFile!=null) {
+                            try { studentFile.close(); }
+                            catch(IOException e) {}
+                        }
                     }
 
                 }
@@ -289,6 +283,12 @@ public class Student {
 
     public boolean isScholarshipRecipient() {
         return isScholarshipRecipient;
+    }
+
+    public void setStudent_criteria(String m, int h, double g) {
+        student_criteria.setMajor(m);
+        student_criteria.setHours(h);
+        student_criteria.setGpa(g);
     }
 
     public void setScholarshipRecipient(boolean isScholarshipRecipient) {

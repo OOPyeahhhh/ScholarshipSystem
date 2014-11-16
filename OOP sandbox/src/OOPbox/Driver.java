@@ -22,6 +22,12 @@ public class Driver {
 
         if(response.toLowerCase().equals("student")) {
             System.out.println("Enter Student ID: ");
+
+            while(!stdin.hasNextInt())
+            {
+                System.out.println("Please enter a valid ID."); // TODO: restrictions on ID #'s
+                stdin.next();
+            }
             int student_id = stdin.nextInt();
             stdin.nextLine(); // read in \n
             Student applicant = new Student(student_id);
@@ -44,7 +50,8 @@ public class Driver {
                     System.out.println("What is your GPA? (Out of 4.0) ");
                     double gpa = stdin.nextDouble();
 
-                    applicant.setCriteria(major, hours, gpa);
+
+                    applicant.setStudent_criteria(major, hours, gpa);
 
                     System.out.println("Searching for scholarships...");
                     try {
@@ -100,7 +107,7 @@ public class Driver {
 
 
 //            }
-//            else
+//            else // Admin not authenticated
 //            {
                 // TODO: message dialogue and exit
 //            }
