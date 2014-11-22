@@ -127,7 +127,6 @@ public class Admin {
 				}
 			}
 		} while (invalid);
-		stdin.close();
 
 	}
 	public void seeScholarshipAwarded()

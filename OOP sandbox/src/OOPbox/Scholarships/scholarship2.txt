@@ -1,8 +1,8 @@
 2
-Continuum Scholarship
-5500 7 17
-7
-Archaeology
-300
-4.0
-10000
+CS Scholarship
+2018 1 1
+20
+Computer Science
+24
+3.0
+1500.0
