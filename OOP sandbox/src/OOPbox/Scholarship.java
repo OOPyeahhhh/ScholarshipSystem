@@ -48,13 +48,13 @@ public class Scholarship
 
     private void setID()
     {
-        String schDirPath = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Scholarships";
+        String schDirPath = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Scholarships";
         scholarshipID = new File(schDirPath).list().length + 1;
     }
     private void writeScholarship()
     {
         // Create file with name "scholarship[ID#].txt"
-        String scholarshipFileName = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Scholarships/scholarship" + scholarshipID + ".txt";
+        String scholarshipFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Scholarships/scholarship" + scholarshipID + ".txt";
         try {
             PrintWriter scholarshipFile = new PrintWriter(new File(scholarshipFileName));
             /* Write to file with format
@@ -87,7 +87,7 @@ public class Scholarship
         }
 
         // Create empty recipients file
-        String recipientsFileName = "/Users/alice/Desktop/IdeaProjects/OOP sandbox/src/OOPbox/Recipients/recipients" + scholarshipID + ".txt";
+        String recipientsFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Recipients/recipients" + scholarshipID + ".txt";
         try {
             PrintWriter recipientsFile = new PrintWriter(new File(recipientsFileName));
             recipientsFile.close();

@@ -204,45 +204,49 @@ public class Student {
                 } else // Student found to be eligible for at least 1 scholarship, which was/were printed
                 {
                     Scanner stdin = new Scanner(System.in);
-                    System.out.println("Please choose a scholarship by entering its ID number.");
+                    System.out.println("Please choose a scholarship by entering its ID number, or enter -1 to choose none.");
                     int response = stdin.nextInt();
                     while (!Arrays.asList(schIDs).contains(response)) {
                         System.out.println("Please enter the ID number of a scholarship from the provided list.");
                         response = stdin.nextInt();
                     }
 
-                    String recipientsFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Recipients/recipients" + response + ".txt";
-                    try {
-                        FileWriter recipientsFile = new FileWriter(new File(recipientsFileName), true);
-                        recipientsFile.write(String.valueOf(studentID));
+                    if(response==-1)
+                    {
+                        System.out.println("Thank you. You will be logged out.");
+                    }
+                    else {
+
+                        String recipientsFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Recipients/recipients" + response + ".txt";
+                        try {
+                            FileWriter recipientsFile = new FileWriter(new File(recipientsFileName), true);
+                            recipientsFile.write(String.valueOf(studentID));
 //                        recipientsFile.write("\n");
-                        recipientsFile.close();
-                        System.out.println("You have been awarded the scholarship.");
+                            recipientsFile.close();
+                            System.out.println("You have been awarded the scholarship.");
 
-                    } catch (IOException e) {
-                        System.out.println("An error occurred while accessing recipients list.");
-                    }
+                        } catch (IOException e) {
+                            System.out.println("An error occurred while accessing recipients list.");
+                        }
 
-                    String studentFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student" + studentID + ".txt";
-                    FileWriter studentFile = null;
-                    try{
-                        studentFile = new FileWriter(new File(studentFileName), false); // File will be overwritten rather than appended to
-                        studentFile.write("1"); // Write 1 to indicate that student is scholarship recipient
-                        studentFile.write("\n");
-                        studentFile.write(String.valueOf(response)); // Write the ID of the chosen scholarship
-                    }
-                    catch(IOException e)
-                    {
-                        System.out.println("An error occurred while accessing student file.");
-                    }
-                    finally
-                    {
-                        if(studentFile!=null) {
-                            try { studentFile.close(); }
-                            catch(IOException e) {}
+                        String studentFileName = "/Users/alice/ScholarshipSystem/OOP sandbox/src/OOPbox/Students/student" + studentID + ".txt";
+                        FileWriter studentFile = null;
+                        try {
+                            studentFile = new FileWriter(new File(studentFileName), false); // File will be overwritten rather than appended to
+                            studentFile.write("1"); // Write 1 to indicate that student is scholarship recipient
+                            studentFile.write("\n");
+                            studentFile.write(String.valueOf(response)); // Write the ID of the chosen scholarship
+                        } catch (IOException e) {
+                            System.out.println("An error occurred while accessing student file.");
+                        } finally {
+                            if (studentFile != null) {
+                                try {
+                                    studentFile.close();
+                                } catch (IOException e) {
+                                }
+                            }
                         }
                     }
-
                 }
             } else {
                 System.out.println("Error: not a directory.");
